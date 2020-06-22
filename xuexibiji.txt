@@ -1,0 +1,253 @@
+新建文件名为hello.c的源文件：输入vim hello.cpp；
+键入i 进入insert模式（即编辑输入模式），写入如下经典代码：
+//the first program hello.cpp
+#include<stdio.h>
+int main(void)
+{
+printf("Hello, world!\n");
+return 0;
+}
+输入完成后，Esc 回到normal模式，键入:wq 保存退出vim。
+编译hello.cpp
+在终端执行 g++ hello.c -o hello 编译。
+运行程序hello
+./hello 就看到结果：
+
+
+//git
+a.创建目录
+在本机上选择一个合适的地方，创建一个本地目录，命令如下：
+mkdir directory−name
+cd directory-name
+$ pwd
+b.使用目录
+进入所创建的目录，然后将该目录变为Git可以管理的仓库，命令如下：
+$ git init
+c.查看仓库
+进入本地仓库目录，可查看本地仓库目录的状态，命令如下：
+$ git status
+d.远程初始一个Git仓库
+
+远程初始一个Git仓库，命令如下：
+
+$ git –bare init
+e.添加远程地址
+
+添加远程地址，设置GitHub的仓库地址并取名为origin(不知是否可以取其它名字)，命令如下：
+
+$ git remote add origin git@github.com:yourName/yourRepo.git
+上条命令中的yourName和yourRepo表示你在GitHub中的用户名和前面在GitHub中所新建的仓库的名称，添加完之后进入.git，打开config，这里会多出一个remote “origin”内容，这就是刚才添加的远程地址，也可以直接修改config来配置远程地址。
+
+f.添加文件
+
+在本地仓库中添加一些文件，如readme，命令如下：
+
+$ git add README
+此处添加的内容，必须在本地仓库中，而且git命令须都在本地仓库目录中才能执行。
+
+g.提交评论
+
+提交文件，并对此次提交进行评论，命令如下：
+
+$ git commit -m “your comment”
+h.上传文件
+
+将文件上传到GitHub服务器上，命令如下：
+
+$ git push origin master
+git push命令会将本地仓库中的内容推送到远程服务器上。
+
+修改完代码后，使用git status可以查看文件的差别；使用git add 添加要commit的文件，也可以用git add -i来智能添加文件，git add -A添加所有文件；之后使用git commit提交本次修改；最后使用git push上传到github。
+ 1、yuanchenchangku先拉下来，会自动合并的（不用操心）
+
+git pull origin master
+
+2、再上传
+
+git push -u origin master
+
+在ubuntu中编译C++代码的两种方法https://blog.csdn.net/mohe_wkk/article/details/81588674
+touch hello.cpp  新建文件用touch 命令
+打开文件用gedit 或者vim
+gedit hello.cpp 
+vim hello.cpp
+
+方法：当前目录执行.sh文件
+1、cd到.sh文件所在目录
+比如以hello.sh文件为例
+2、给.sh文件添加x执行权限,比如以hello.sh文件为例，chmod u+x hello.sh
+3、./执行.sh文件
+比如以hello.sh文件为例，./hello.sh 即可执行hello.sh文件
+4、sh 执行.sh文件
+以hello.sh文件为例，sh hello.sh即可执行hello.sh文件
+注意事项：用“./”加文件名.sh执行时，必须给.sh文件加x执行权限
+
+
+//c++对txt文件读取操作+实例代码
+
+1.c++文件流：
+fstream   //文件流
+ifstream  //输入文件流
+ofstream  //输出文件流
+2.文件路径的表示
+文件路径的表示可以分为绝对路径和相对路径。
+绝对路径：pDummyFile = fopen("D:\\vctest\\glTexture\\texture\\dummy.bmp", "rb"); 
+给出了从盘符开始的全部路径，这里需要注意的是“\”要用双斜线"\\"
+相对路径：对相对路径而言，路径表示中的“\”也要用双斜线"\\"
+//
+1、.\ 或 ./  表示当前目录，或同级目录；    
+2、..\ 或 ../  表示父目录，或上级目录。
+3、文件打开方式选项：
+ios::in   //供读，文件不存在则创建（ifstream默认的打开方式）
+ios::out   //供写，文件不存在则创建，文件存在则清空原内容（ofstream默认打开方式）
+ios::ate  //文件打开时，指针指在文件最后，常和in、out联合使用
+ios::app   //供写，文件不存在则创建，在原文件内容后写入新的内容，指针位置总在最后
+ios::binary  //二进制格式文件
+3、对txt文件的显示和复制(显示in.txt文件内容并将in.txt的内容复制到out.txt文件中)
+//实现txt文件的读入并重写入另外一个txt文件中~
+#include<fstream>  //ifstream
+#include<iostream>
+#include<string>     //包含getline()
+//#include<cmath>
+using namespace std;
+ 
+int main(){
+    string s;
+    ofstream outf;
+    ifstream inf;
+    inf.open("d://in.txt");          //特别注意，这里是：//  是双斜杠喔~~ 
+    //打开输出文件
+    outf.open("d://out.txt");     
+    while (getline(inf, s))      //getline(inf,s)是逐行读取inf中的文件信息
+    {
+        outf << s << '\n';
+        cout << s << endl;
+    }
+    inf.close();
+    outf.close();
+    return 0;
+}
+4、基本的从txt文件中读入数据和显示数据
+//为能够正确读出写入文件的各数据，各数据间最好要有分隔
+#include<iostream>
+#include<fstream>
+using namespace std;
+int main()
+{
+    fstream f("d:\\out.txt",ios::out);
+    f<<1234<<' '<<3.14<<'A'<<"How are you";      //写入数据　　
+    f.close();
+    f.open("d:\\out.txt",ios::in);
+    int i;
+    double d;
+    char c;
+    char s[20];
+    f>>i>>d>>c;　　　　　　　　　//读取数据
+    f.getline(s,20);
+    cout<<i<<endl;　　　　　　　//显示各数据
+    cout<<d<<endl;
+    cout<<c<<endl;
+    cout<<s<<endl;
+    f.close();
+    return 0;
+}
+// 在文件后面续写数据
+#include <iostream>
+#include<fstream>
+using namespace std;
+int main () {
+    ofstream examplefile   ("example.txt",ios::app);
+    if(examplefile.is_open()) {
+        examplefile<<"This is a line.\n";
+        examplefile<<"This is another line.\n";
+        examplefile.close();
+    }
+    return 0;
+}
+5、istringstream用法
+istringstream对象可以绑定一行字符串，然后以空格为分隔符把该行分隔开来。
+#include<iostream>
+#include<sstream>
+using namespace std;
+int main()
+{
+	string str, line;
+	while(getline(cin, line))
+	{
+		istringstream stream(line);
+		while(stream>>str)
+			cout<<str.c_str()<<endl;
+	}	
+	return 0;
+}
+测试：
+input：
+abc   df   e              efgeg      ffg
+
+ouput：
+abc
+df
+e
+efgeg
+ffg
+6、用vctor储存读取的数据
+可以看看这个网址，百度一下也行
+https://wenwen.sogou.com/z/q809722253.htm
+
+7、汽车加油问题的文件操作
+一辆汽车加满油后可以行驶n千米。旅途中有k个加油站。若要使沿途的加油次数最少，设计一个有效的算法，指出应在那些加油站停靠加油。
+ 数据输入：由文件input.txt 给出输入数据。第一行有2个正整数n和k，表示汽车加满油后可行驶nkm，且旅途中有k个加油站。接下来1行中，有k+1个整数，表示第k个加油站与第k-1个加油站之间的距离。第0个加油站表示出发地，汽车已加满油。第k+1个加油站表示目的地。
+结果输出：将编程计算出的最少加油次数输出到文件ouput.txt。如果无法到达目的地，则输出“No Solution”。
+输入文件示例              输出文件示例
+Input.txt                   output.txt
+7   7                          4
+1 2 3 4 5 1 6 6 
+#include<iostream>
+#include<fstream>
+using namespace std;
+ 
+int main()
+{
+   ifstream fin("input.txt",ios::in);
+    ofstream fout("output.txt");
+    int a[100];  //距离
+    int n,k;
+    fin>>n>>k;
+    for(int i=0;i<k+1;i++)
+        fin>>a[i];
+    int sum=0;   //加油次数
+    int k1=0;      //加油后的里程数
+    for(int i=0;i<k+1;i++)
+        if(a[i]>n)
+        {
+            fout<<"No Solution";
+            return -1;
+        }
+    for(int i=0;i<k+1;i++)
+    {
+        k1+=a[i];
+        if(k1>n)
+        {
+            sum++;
+            k1=a[i];
+        }
+    }
+    fout<<sum<<endl<<"停靠的加油站:";
+    k1=0;
+    for(int i=0;i<k+1;i++)
+    {
+        k1+=a[i];
+        if(k1>n)
+        {
+            k1=a[i];
+            fout<<i<<' ';
+        }
+    }
+    fout<<endl;
+    fout.close();
+    fin.close();
+    return 0;
+}
+
+
+
